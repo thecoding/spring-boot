@@ -1,0 +1,12 @@
+-------------------------------------------------------------------------------
+Test set: com.spring_boot.mapper.UserMapperTest
+-------------------------------------------------------------------------------
+Tests run: 3, Failures: 1, Errors: 1, Skipped: 0, Time elapsed: 0.629 s <<< FAILURE! - in com.spring_boot.mapper.UserMapperTest
+testInsert(com.spring_boot.mapper.UserMapperTest)  Time elapsed: 0.053 s  <<< FAILURE!
+java.lang.AssertionError: expected:<3> but was:<12>
+	at com.spring_boot.mapper.UserMapperTest.testInsert(UserMapperTest.java:27)
+
+testUpdate(com.spring_boot.mapper.UserMapperTest)  Time elapsed: 0.012 s  <<< ERROR!
+java.lang.NullPointerException
+	at com.spring_boot.mapper.UserMapperTest.testUpdate(UserMapperTest.java:40)
+
