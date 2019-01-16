@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -28,7 +29,7 @@ public class UserController {
     private BookMapper bookMapper;
 
     @RequestMapping("/getUsers")
-    @DS
+//    @DS
     public List<User> getUsers() {
         List<User> users = userMapper.getAll();
         return users;
@@ -61,14 +62,36 @@ public class UserController {
     }
 
 
+    @RequestMapping("/getUserAndBook")
     public Map getUserAndBook() {
+//        @DS
+        User user = getFirstUser();
+
+//        @DS(value = "datasource2")
+        Book book = getFirstBook();
+        Map map = new HashMap();
+        map.put("user", user);
+        map.put("book", book);
         return null;
     }
 
-    @RequestMapping(value = "/getBook")
     @DS(value = "datasource2")
+    private Book getFirstBook() {
+        return bookMapper.getOneBook();
+    }
+
+    @DS
+    private User getFirstUser(){
+        return userMapper.getOneUser();
+    }
+
+
+    @RequestMapping(value = "/getBook")
+//    @DS(value = "datasource2")
     public Book getBook() {
         return bookMapper.getOneBook();
     }
+
+
 
 }
