@@ -5,6 +5,8 @@ import com.spring_boot.bean.Book;
 import com.spring_boot.bean.User;
 import com.spring_boot.mapper.BookMapper;
 import com.spring_boot.mapper.UserMapper;
+import com.spring_boot.service.BookService;
+import com.spring_boot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,8 +30,14 @@ public class UserController {
     @Autowired
     private BookMapper bookMapper;
 
+    @Autowired
+    private BookService bookService;
+
+    @Autowired
+    private UserService userService;
+
     @RequestMapping("/getUsers")
-//    @DS
+    @DS
     public List<User> getUsers() {
         List<User> users = userMapper.getAll();
         return users;
@@ -62,36 +70,44 @@ public class UserController {
     }
 
 
-    @RequestMapping("/getUserAndBook")
-    public Map getUserAndBook() {
-//        @DS
-        User user = getFirstUser();
-
-//        @DS(value = "datasource2")
-        Book book = getFirstBook();
-        Map map = new HashMap();
-        map.put("user", user);
-        map.put("book", book);
-        return null;
-    }
-
     @DS(value = "datasource2")
-    private Book getFirstBook() {
+    public Book getFirstBook() {
         return bookMapper.getOneBook();
     }
 
     @DS
-    private User getFirstUser(){
+    public User getFirstUser(){
         return userMapper.getOneUser();
     }
 
 
     @RequestMapping(value = "/getBook")
-//    @DS(value = "datasource2")
+    @DS(value = "datasource2")
     public Book getBook() {
         return bookMapper.getOneBook();
     }
 
+
+    @RequestMapping("/getUserAndBook")
+    public Map getUserAndBook() {
+        User user = getFirstUser();
+        Book book = getFirstBook();
+        Map map = new HashMap();
+        map.put("user", user);
+        map.put("book", book);
+        return map;
+    }
+
+
+    @RequestMapping("/getUserAndBookOther")
+    public Map getUserAndBookOther() {
+        User user = userService.getOneUser();
+        Book book = bookService.getOneBook();
+        Map map = new HashMap();
+        map.put("user", user);
+        map.put("book", book);
+        return map;
+    }
 
 
 }
