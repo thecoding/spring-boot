@@ -1,7 +1,7 @@
-package org.example.security;
+package org.example.security.detail;
 
 import com.google.common.collect.Sets;
-import org.example.security.entity.User;
+import org.example.security.entity.UserInfo;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,8 +12,8 @@ import org.springframework.stereotype.Component;
 import java.util.Collection;
 import java.util.HashSet;
 
-@Component("myUserDetailService")
-public class MyUserDetailServiceImpl implements UserDetailsService {
+@Component("usernameDetailService")
+public class UsernameDetailServiceImpl implements UserDetailsService {
 
     /**
      * 获取用户信息
@@ -23,7 +23,13 @@ public class MyUserDetailServiceImpl implements UserDetailsService {
      */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = new User();
+        UserInfo user = new UserInfo();
+        user.setUsername("test");
+        user.setPassword("123456");
+        user.setEnabled(true);
+        user.setAccountNonExpired(true);
+        user.setAccountNonLocked(true);
+        user.setCredentialsNonExpired(true);
         return new org.springframework.security.core.userdetails.User(
                 user.getUsername(),
                 user.getPassword(),
@@ -35,7 +41,7 @@ public class MyUserDetailServiceImpl implements UserDetailsService {
         );
     }
 
-    private Collection<? extends GrantedAuthority> obtainGrantedAuthorities(User user) {
+    private Collection<? extends GrantedAuthority> obtainGrantedAuthorities(UserInfo user) {
         HashSet<GrantedAuthority> rtn = Sets.newHashSet();
         rtn.add(new SimpleGrantedAuthority("ROLE_USER"));
         rtn.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
